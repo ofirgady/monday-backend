@@ -1,0 +1,60 @@
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+
+# Virtual environment and secrets
+.env
+*.env
+venv/
+env/
+
+# Temporary Files
+tmp/
+temp/
+
+# Logs
+logs/
+*.log
+
+# Databases
+*.db
+*.sqlite
+
+# Data folders (uncomment if needed)
+data/raw/
+data/processed/
+
+# Large data files (uncomment if necessary)
+*.csv
+*.xls
+*.xlsx
+*.json
+*.pickle
+*.pkl
+
+# Model artifacts (optional)
+models/
+checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE-specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Coverage reports
+.coverage
+htmlcov/
+
+# Project-specific ignores
+node_modules/
+dist/
+build/
