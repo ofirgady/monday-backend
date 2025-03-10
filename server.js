@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import http from 'http'
 import path from 'path'
 import cors from 'cors'
@@ -7,9 +10,9 @@ import cookieParser from 'cookie-parser'
 import { boardRoutes } from './api/board/board.routes.js'
 import { logger } from './services/logger.service.js'
 
+
 const app = express()
 const server = http.createServer(app)
-
 // Express App Config
 app.use(cookieParser())
 app.use(express.json())
