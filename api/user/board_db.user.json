@@ -1,0 +1,52 @@
+[{
+  "_id": {
+    "$oid": "67ced8e1556eff2b64923808"
+  },
+  "fullname": "Tal Tarablus",
+  "username": "tal.tarablus",
+  "imgUrl": "https://example.com/img/tal.jpg",
+  "email": "tal.tarablus@example.com",
+  "role": "member",
+  "isActive": true,
+  "isAdmin": false,
+  "activities": []
+},
+{
+  "_id": {
+    "$oid": "67ced8e1556eff2b64923809"
+  },
+  "fullname": "Yuval Dadon",
+  "username": "yuval.dadon",
+  "imgUrl": "https://example.com/images/yuval-dadon.jpg",
+  "email": "yuval.dadon@example.com",
+  "role": "member",
+  "isActive": true,
+  "isAdmin": false,
+  "activities": []
+},
+{
+  "_id": {
+    "$oid": "67ced8e1556eff2b6492380a"
+  },
+  "fullname": "Ofir Gady",
+  "username": "ofir.gady",
+  "imgUrl": "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250",
+  "email": "ofir.gady@example.com",
+  "role": "member",
+  "isActive": true,
+  "isAdmin": false,
+  "activities": []
+},
+{
+  "_id": {
+    "$oid": "67ced8e1556eff2b6492380b"
+  },
+  "fullname": "Gal Israeli",
+  "username": "gal.israeli",
+  "imgUrl": "https://www.gravatar.com/avatar/placeholder?s=250",
+  "email": "gal.israeli@example.com",
+  "role": "member",
+  "isActive": true,
+  "isAdmin": false,
+  "activities": []
+}]

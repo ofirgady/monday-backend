@@ -9,10 +9,13 @@ import cookieParser from 'cookie-parser'
 
 import { boardRoutes } from './api/board/board.routes.js'
 import { logger } from './services/logger.service.js'
+import { userRoutes } from './api/user/user.routes.js';
+import { authRoutes } from './api/auth/auth.routes.js';
 
 
 const app = express()
 const server = http.createServer(app)
+
 // Express App Config
 app.use(cookieParser())
 app.use(express.json())
@@ -32,6 +35,8 @@ if (process.env.NODE_ENV === 'production') {
     app.use(cors(corsOptions))
 }
 
+app.use('/api/auth', authRoutes)
+app.use('/api/user', userRoutes)
 app.use('/api/board', boardRoutes)
 
 
