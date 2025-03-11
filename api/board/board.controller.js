@@ -4,8 +4,8 @@ import { boardService } from './board.service.js'
 
 export async function getBoards(req, res) {
     try {
-        const filterBy = {}
-        const boards = await boardService.query(filterBy)
+        
+        const boards = await boardService.query()
         res.json(boards)
     } catch (error) {
         logger.error('Failed to get boards', error)
@@ -15,8 +15,16 @@ export async function getBoards(req, res) {
 
 export async function getBoardById(req, res) {
 	try {
+        const filterBy = {
+            txt: req.query.txt || '',
+            groups: req.query.groups || [],
+            tasks: req.query.tasks || [],
+            members: req.query.members || [],
+            statusLabels: req.query.statusLabels || [],
+            priorityLabels: req.query.priorityLabels || [],
+        }
         const boardId = req.params.id
-        const board = await boardService.getById(boardId)
+        const board = await boardService.getById(boardId, filterBy)
         res.json(board)
     } catch (error) {
         logger.error('Failed to get board', error)
