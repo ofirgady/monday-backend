@@ -11,6 +11,7 @@ import { boardRoutes } from './api/board/board.routes.js'
 import { logger } from './services/logger.service.js'
 import { userRoutes } from './api/user/user.routes.js';
 import { authRoutes } from './api/auth/auth.routes.js';
+import { setupSocketAPI } from './services/socket.service.js';
 
 
 const app = express()
@@ -39,6 +40,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/board', boardRoutes)
 
+setupSocketAPI(server)
 
 app.get('/**', (req, res) => {
     res.sendFile(path.resolve('public/index.html'))
