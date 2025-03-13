@@ -47,6 +47,7 @@ export async function updateBoard(req, res) {
 	const board = req.body
     try {
         const updateBoard = await boardService.update(board)
+        // TODO use socket to update all clients
         res.json(updateBoard)
     } catch (error) {
         logger.error('Failed to update board', error)
