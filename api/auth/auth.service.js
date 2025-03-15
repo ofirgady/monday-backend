@@ -14,6 +14,7 @@ export const authService = {
 }
 
 async function login(username, password) {
+	logger.debug('auth.service - login called with username:', username)
 	logger.debug(`auth.service - login with username: ${username}`)
 
 	const user = await userService.getByUsername(username)
@@ -24,10 +25,12 @@ async function login(username, password) {
 
 	delete user.password
 	user._id = user._id.toString()
+	logger.debug('auth.service - login successful, user:', user)
 	return user
 }
 
 async function signup({ username, password, fullname, imgUrl = '', email, role, isAdmin = false }) {
+	logger.debug('auth.service - signup called with username:', username)
 	const saltRounds = 10
 
 	logger.debug(`auth.service - signup with username: ${username}, fullname: ${fullname}`)
@@ -37,21 +40,34 @@ async function signup({ username, password, fullname, imgUrl = '', email, role, 
 	if (userExist) return Promise.reject('Username already taken')
 
 	const hash = await bcrypt.hash(password, saltRounds)
-	return userService.add({ username, password: hash, fullname, imgUrl, email, role, isAdmin, activities: [] })
+	try {
+		const user = await userService.add({ username, password: hash, fullname, imgUrl, email, role, isAdmin, activities: [] })
+		logger.debug('auth.service - signup successful, user:', user)
+		return user
+	} catch (err) {
+		logger.error('auth.service - signup failed:', err)
+		throw err
+	}
 }
 
 function getLoginToken(user) {
+	logger.debug('auth.service - getLoginToken called for user:', user._id)
 	const userInfo = { 
-        _id: user._id, 
-        fullname: user.fullname, 
-        email: user.email,
-        role: user.role,
-        isAdmin: user.isAdmin,
-    }
+		_id: user._id, 
+		fullname: user.fullname, 
+		username: user.username,
+		imgUrl: user.imgUrl,
+		email: user.email,
+		role: user.role,
+		isActive: user.isActive,
+		isAdmin: user.isAdmin,
+		activities: user.activities,
+	}
 	return cryptr.encrypt(JSON.stringify(userInfo))
 }
 
 function validateToken(loginToken) {
+	logger.debug('auth.service - validateToken called')
 	try {
 		const json = cryptr.decrypt(loginToken)
 		const loggedinUser = JSON.parse(json)

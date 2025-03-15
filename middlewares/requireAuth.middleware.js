@@ -1,19 +1,29 @@
-import { authService } from '../api/auth/auth.service.js'
+import { config } from '../config/index.js'
+import { asyncLocalStorage } from '../services/als.service.js'
 import { logger } from '../services/logger.service.js'
 
+
 export function requireAuth(req, res, next) {
-    const loggedinUser = authService.validateToken(req.cookies.loginToken)
-    if (!loggedinUser) return res.status(401).send('Login first!')
-    req.loggedinUser = loggedinUser
+    const { loggedinUser } = asyncLocalStorage.getStore()
+    req.user = loggedinUser
+
+
+    if (config.isGuestMode && !loggedinUser) {
+        req.user = { _id: '', fullname: 'Guest' }
+        return next()
+    }
+    if (!loggedinUser) return res.status(401).send({ err: 'You\'re not authenticated' })
     next()
 }
-export function requireAdmin(req, res, next) {
-    const loggedinUser = req.loggedinUser
 
-    if (!loggedinUser) return res.status(401).send('Not Authenticated')
+export function requireAdmin(_, res, next) {
+    const { loggedinUser } = asyncLocalStorage.getStore()
+
+    if (!loggedinUser) return res.status(401).send({ err: 'Your\'e not authenticated' })
     if (!loggedinUser.isAdmin) {
-        logger.warn(loggedinUser.fullname + ' attempted to perform admin action')
-       return res.status(403).send('Not Authorized')
+        logger.warn(loggedinUser.fullname + 'attempted to perform admin action')
+        res.status(403).end({ err: 'You\'re not authorized to perform this action' })
+        return
     }
     next()
 }
